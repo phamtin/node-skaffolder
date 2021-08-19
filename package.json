@@ -1,0 +1,34 @@
+{
+  "name": "node-be",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "tinphamtp",
+  "license": "ISC",
+  "scripts": {
+    "start": "nodemon ./src/index.js"
+  },
+  "dependencies": {
+    "agenda": "^4.2.1",
+    "agendash2": "^0.8.2",
+    "aws-sdk": "^2.973.0",
+    "bcrypt": "^5.0.1",
+    "compression": "^1.7.4",
+    "date-fns": "^2.23.0",
+    "dotenv": "^9.0.0",
+    "express": "^4.17.1",
+    "express-mongo-sanitize": "^2.1.0",
+    "helmet": "^4.6.0",
+    "joi": "^17.4.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.13.7",
+    "nodemailer": "^6.6.3",
+    "pino": "^6.13.0",
+    "pino-pretty": "^4.8.0",
+    "xss-clean": "^0.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12",
+    "prettier": "^2.2.1"
+  }
+}
