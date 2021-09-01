@@ -1,21 +1,19 @@
-const dotenv = require("dotenv");
-const path = require("path");
-const Joi = require("joi");
+const dotenv = require('dotenv');
+const path = require('path');
+const Joi = require('joi');
 
-dotenv.config({ path: path.join(__dirname, "../../.env") });
+dotenv.config({ path: path.join(__dirname, '../../.env') });
 
 const envVarsSchema = Joi.object()
   .keys({
-    NODE_ENV: Joi.string()
-      .valid("production", "development", "test")
-      .required(),
+    NODE_ENV: Joi.string().valid('production', 'development', 'test').required(),
     PORT_API: Joi.number().default(8000),
     DB_HOST: Joi.string().required(),
     DB_NAME: Joi.string().required(),
 
     JWT_SECRET: Joi.string().required(),
-    JWT_ACCESS_EXPIRATION_MINUTES: Joi.number().default(30),
-    JWT_REFRESH_EXPIRATION_MINUTES: Joi.number().default(1),
+    JWT_ACCESS_EXPIRATION_MINUTES: Joi.number(),
+    JWT_REFRESH_EXPIRATION_MINUTES: Joi.number(),
     JWT_RESET_PASSWORD_EXPIRATION_MINUTES: Joi.number().default(5),
     JWT_VERIFY_EMAIL_EXPIRATION_MINUTES: Joi.number().required(),
 
@@ -25,10 +23,10 @@ const envVarsSchema = Joi.object()
     SMTP_PASSWORD: Joi.string().required(),
     EMAIL_FROM: Joi.string().required(),
 
-    AGENDA_POLL_TIME: Joi.string().default("20 seconds"),
+    AGENDA_POLL_TIME: Joi.string().default('20 seconds'),
     AGENDA_MAX_CONCURRENCY: Joi.number().default(20),
-    DASH_USER: Joi.string().default("admin"),
-    DASH_PASS: Joi.string().default("123123"),
+    DASH_USER: Joi.string().default('admin'),
+    DASH_PASS: Joi.string().default('123123'),
 
     AWS_BUCKET_REGION: Joi.string().required(),
     AWS_ACCEPT_KEY: Joi.string().required(),
@@ -37,7 +35,7 @@ const envVarsSchema = Joi.object()
   .unknown();
 
 const { value: envVars, error } = envVarsSchema
-  .prefs({ errors: { label: "key" } })
+  .prefs({ errors: { label: 'key' } })
   .validate(process.env);
 
 if (error) throw new Error(`Invalid env configs: ${error.message}`);
@@ -46,7 +44,7 @@ if (error) throw new Error(`Invalid env configs: ${error.message}`);
 module.exports = {
   env: envVars.NODE_ENV,
 
-  api: { prefix: "/api" },
+  api: { prefix: '/api' },
 
   port: envVars.PORT_API,
 
@@ -55,10 +53,10 @@ module.exports = {
   CORS: {
     enabled: true,
     settings: {
-      "Access-Control-Allow-Credentials": "true",
-      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, HEAD, OPTIONS",
-      "Access-Control-Allow-Headers":
-        "Accept,Access-Control-Allow-Headers,Authorization,Cache-Control,Content-Type,DNT,If-Modified-Since,Keep-Alive,Origin,User-Agent,X-Requested-With",
+      'Access-Control-Allow-Credentials': 'true',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, HEAD, OPTIONS',
+      'Access-Control-Allow-Headers':
+        'Accept,Access-Control-Allow-Headers,Authorization,Cache-Control,Content-Type,DNT,If-Modified-Since,Keep-Alive,Origin,User-Agent,X-Requested-With',
     },
   },
 
@@ -66,13 +64,12 @@ module.exports = {
     secret: envVars.JWT_SECRET,
     accessExpirationMinutes: envVars.JWT_ACCESS_EXPIRATION_MINUTES,
     refreshExpirationMinutes: envVars.JWT_REFRESH_EXPIRATION_MINUTES,
-    resetPasswordExpirationMinutes:
-      envVars.JWT_RESET_PASSWORD_EXPIRATION_MINUTES,
+    resetPasswordExpirationMinutes: envVars.JWT_RESET_PASSWORD_EXPIRATION_MINUTES,
     verifyEmailExpirationMinutes: envVars.JWT_VERIFY_EMAIL_EXPIRATION_MINUTES,
   },
 
   agendaQueue: {
-    collection: "jobs",
+    collection: 'jobs',
     dbUrl: `mongodb://${envVars.DB_HOST}/${envVars.DB_NAME}?readPreference=primary&appname=MongoDB`,
     processEvery: envVars.AGENDA_POLL_TIME,
     maxConcurrency: envVars.AGENDA_MAX_CONCURRENCY,
