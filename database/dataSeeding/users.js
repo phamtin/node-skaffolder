@@ -1,6 +1,6 @@
 /**
  *  Add field xxx for User table.
- *  Date: 18/08/2021
+ *  Date: 04/09/2021
  */
 async function migrateIsDeleteField(userIds) {
   const User = _model('User');
